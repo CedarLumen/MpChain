@@ -14,7 +14,16 @@ if not exist ck_seed0.pt (
   exit /b 0
 )
 echo --- BLEU-2 / token accuracy (same 500 sentences for every model) ---
-python eval_bleu_any.py ck_seed0.pt ck_seed1.pt ck_seed2.pt ck_moe_s0.pt
+set LIST=
+if exist ck_seed0.pt set LIST=%LIST% ck_seed0.pt
+if exist ck_seed1.pt set LIST=%LIST% ck_seed1.pt
+if exist ck_seed2.pt set LIST=%LIST% ck_seed2.pt
+if exist ck_moe_s0.pt set LIST=%LIST% ck_moe_s0.pt
+if exist ck_ab_nomp.pt set LIST=%LIST% ck_ab_nomp.pt
+if exist ck_ab_lastonly.pt set LIST=%LIST% ck_ab_lastonly.pt
+if exist ck_ab_randroute.pt set LIST=%LIST% ck_ab_randroute.pt
+echo checkpoints:%LIST%
+python eval_bleu_any.py%LIST%
 if errorlevel 1 goto fail
 echo.
 echo --- dense baseline, identical protocol ---
