@@ -13,9 +13,9 @@ reported numbers are read from.
 
 | Path | Contents |
 |---|---|
-| `src/` | Model, training loops, evaluation, mechanism ablations, efficiency benchmarks (20 files) |
+| `src/` | Model, training loops, evaluation, mechanism ablations, efficiency benchmarks (21 files) |
 | `scripts/` | End-to-end reproduction, one script per block of results |
-| `results/` | The raw reports the paper's numbers are taken from (machine-written text files) |
+| `results/` | The raw reports the paper's numbers are taken from (machine-written text files), plus a glossary of their column labels |
 | `docs/` | `reproduction.md` (paper section to command to output) and `data.md` (corpora) |
 | `paper/` | Manuscript and cover letter |
 
@@ -24,6 +24,7 @@ reported numbers are read from.
 | File | Role |
 |---|---|
 | `mpchain_tr.py` | The chain: per-expert encoder, fixed-length shared memory, hard argmax routing, termination head |
+| `win.py` | Sliding-window statistics behind the routing load penalty (section 3.4) |
 | `train_tr.py` | Training loop for the chain (per-step supervision, routing-collapse suppression, clones) |
 | `train_moe.py` | Token-level mixture-of-experts baseline at matched parameters |
 | `train_tf.py` | Dense causal Transformer baseline at matched parameter count |
@@ -52,6 +53,16 @@ pip install -r requirements.txt
 CUDA is used when available; the same code runs on CPU, which is how the single-board measurements
 were taken. `torch.cuda` calls are guarded by availability except in `bench_infer2.py` and
 `bench_both.py`, which are GPU-only by construction.
+
+Before running anything expensive, check the installation:
+
+```
+python scripts/smoke_test.py
+```
+
+It fabricates a 800-row synthetic archive with the documented schema and trains a 4-expert chain for
+20 steps, about four seconds on a laptop GPU. It needs a CUDA device; the accuracy it reports means
+nothing, the point is that every import, the model, the training loop and the evaluator execute.
 
 ## Data
 
