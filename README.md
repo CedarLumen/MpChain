@@ -47,7 +47,7 @@ set MPCHAIN_OPUS_SRC=D:\corpus\opus100\train-00000-of-00001.parquet
 
 ## 许可
 
-代码用 MIT，见 `LICENSE`。
+代码用 MIT，见 `LICENSE`（版权持有人：陈孟哲 / Mengzhe Chen，2026）。
 
 `data/` 下两个 `.npz` 是从公开语料派生出来的（联合国英中平行语料、OPUS-100 的 en-zh），不是本项目的原创数据。**MIT 只覆盖代码，不覆盖这两个数据文件**：再发布或商用前请自行核对原语料的使用条款。只想复用代码的话，删掉 `data/` 后用 `1_重建数据_可选.cmd` 从你自己的语料重建即可。
 
