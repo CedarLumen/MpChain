@@ -1,0 +1,14 @@
+等 TF 跑满 100k ... Fri Nov 13 18:58:35 CST 2026
+TF 结束，开始对照 Fri Nov 13 19:04:25 CST 2026
+0 MiB, 0 %
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition   nt=32
+模型         batch  eager ms/tok    整图 ms/tok      加速    吞吐 tok/s
+MpChain        1         18.11         1.94   9.33×         515
+MpChain        8         19.12         2.25   8.50×        3554
+MpChain       32         18.39         2.56   7.19×       12505
+dense TF       1          2.45         0.42   5.84×        2386
+dense TF       8          2.48         0.68   3.65×       11765
+dense TF      32          2.72         1.00   2.72×       31917
+
+FINAL eval acc 0.7207 in 8528s
+BENCH_BOTH_DONE Fri Nov 13 19:04:52 CST 2026

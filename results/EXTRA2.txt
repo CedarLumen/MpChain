@@ -1,0 +1,72 @@
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition, 0 MiB
+
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition
+
+=== ① batch=1 每 token 延迟（ms，200 次；TF 仅 eager） ===
+模型                          p50      p90      p99     mean
+MpChain(eager)            15.19    15.26    16.26    15.27
+/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/compile_fx.py:282: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/lowering.py:7095: UserWarning: 
+Online softmax is disabled on the fly since Inductor decides to
+split the reduction. Cut an issue to PyTorch if this is an
+important use case and you want to speed it up with online
+softmax.
+
+  warnings.warn(
+MpChain+compile            4.80     4.84     5.45     4.82
+TF+KV(eager)               1.89     1.91     2.02     1.90
+
+=== ② MpChain 吞吐曲线（compile，tok/s） ===
+/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/lowering.py:7095: UserWarning: 
+Online softmax is disabled on the fly since Inductor decides to
+split the reduction. Cut an issue to PyTorch if this is an
+important use case and you want to speed it up with online
+softmax.
+
+  warnings.warn(
+  batch   1:      209.7
+  batch   2:      405.2
+  batch   4:      805.1
+  batch   8:     1620.9
+  batch  16:     3261.2
+  batch  32:     6601.0
+  batch  64:    13172.1
+  batch 128:    26234.2
+  TF+KV(eager) batch 32 参照:    14111.1
+
+=== ③ 每句一次的开销（prefill，batch=8，ms） ===
+MpChain+compile  8.39
+TF+KV(eager)     1.97
+
+=== 早停行为 ===
+共 22509 个 token（3 seed × 500 句）
+
+=== ① 选了第几步 ===
+  第 2 步    5229 ( 23.2%)  #############
+  第 3 步    8497 ( 37.7%)  ######################
+  第 4 步    4421 ( 19.6%)  ###########
+  第 5 步    1908 (  8.5%)  #####
+  第 6 步    2454 ( 10.9%)  ######
+
+=== ② 按所选步数分组的准确率（步数多 = 更难？） ===
+  2 步: acc 0.1402  (n=5229)
+  3 步: acc 0.2024  (n=8497)
+  4 步: acc 0.2115  (n=4421)
+  5 步: acc 0.1903  (n=1908)
+  6 步: acc 0.1769  (n=2454)
+
+=== ③ 按解码位置的平均步数（第几个字） ===
+  第  1 个字: 平均 3.36 步  (n=1500)
+  第  2 个字: 平均 3.46 步  (n=1500)
+  第  3 个字: 平均 3.50 步  (n=1473)
+  第  4 个字: 平均 3.38 步  (n=1455)
+  第  5 个字: 平均 3.43 步  (n=1380)
+  第  6 个字: 平均 3.39 步  (n=1269)
+  第 11 个字: 平均 3.45 步  (n=975)
+  第 16 个字: 平均 3.56 步  (n=705)
+  第 21 个字: 平均 3.49 步  (n=396)
+  第 26 个字: 平均 3.68 步  (n=177)
+  第 31 个字: 平均 3.33 步  (n=27)
+  第 32 个字: 平均 3.42 步  (n=12)
+EXTRA2_DONE Fri Nov 13 01:39:00 CST 2026

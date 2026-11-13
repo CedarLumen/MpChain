@@ -1,0 +1,23 @@
+# 真机实验（小设备）
+# 时间 2026-11-13 21:03:55
+# 设备 NVIDIA GeForce RTX 5060 Laptop GPU / 8.0 GiB / torch 2.14.0+cu132
+# 口径 batch=1，解码 32 token，fp32，中位数；能量=板卡功耗积分/token 数
+
+[B] 空闲功耗 15.4 W（46 个样本，5 s）
+
+轮   MpChain ms/tok   dense ms/tok   比值   MpChain W   dense W   MpChain J/tok  dense J/tok  能量比
+ 1           1.99           0.77    2.59×       32.8      53.2         0.068        0.041     1.66×
+ 2           1.98           0.77    2.58×       33.1      54.3         0.067        0.041     1.64×
+ 3           1.98           0.77    2.59×       33.0      50.8         0.067        0.039     1.72×
+
+[汇总] 延迟 MpChain 1.98 ms/token（1.98–1.99），dense 0.77（0.77–0.77），比值 2.58–2.59
+[汇总] 能量 MpChain 0.067 J/token（0.067–0.068），dense 0.041（0.039–0.041）；能量比 MpChain/dense 1.64–1.72
+[汇总] 板卡功耗 MpChain 33.0 W，dense 52.8 W（同轮采样）
+
+[C] torch 线程数 4，无 GPU
+[C] MpChain  11.4 ms/token（0.36 s / 32 token，5 次中位）
+[C] dense TF 6.0 ms/token（0.19 s / 32 token，5 次中位）
+[C] 比值 1.88×
+
+[D] 权重 fp32：MpChain 87 MB / dense 88 MB
+[D] 注：稠密侧用同架构同形状的随机初始化权重计时（成本与权重无关），与论文 §6 口径一致

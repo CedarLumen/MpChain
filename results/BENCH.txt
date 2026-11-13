@@ -1,0 +1,14 @@
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition  总显存 95.0 GB  opt=0
+模型             batch   首token ms   每token ms     吞吐 tok/s     权重MB     峰值MB
+MpChain            1       25.13       25.32         39.5       87      359
+MpChain            8       25.86       25.91        308.8       87      367
+MpChain           32       25.73       26.06       1228.3       87      393
+   (MpChain 总参 22.89M)
+   (CausalTF 总参 22.98M  d=384 L=12 ffn=1536)
+causal+KV          1        1.96        2.02        495.3       88      366
+causal+KV          8        1.96        2.05       3910.3       88      410
+causal+KV         32        2.89        2.17      14608.4       88      556
+causal noKV        1        1.86        1.96        511.8       88      369
+causal noKV        8        1.95        1.91       4183.8       88      436
+causal noKV       32        2.76        3.17      10146.0       88      660
+BENCH_DONE Fri Nov 13 01:34:04 CST 2026

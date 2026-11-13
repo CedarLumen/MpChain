@@ -1,0 +1,10 @@
+GPU/SoC 温度与降频（跑前）: temp=49.4'C throttled=throttled=0x0
+t=1 run1 | [A] 本方法 49.7 ms/token（49.5–49.7） ≈ 20.1 token/s | [B] 稠密基线 58.2 ms/token（57.9–58.9） ≈ 17.2 token/s | [汇总] 本方法/稠密 = 0.85×（>1 表示本方法更慢）
+t=1 run2 | [A] 本方法 49.6 ms/token（49.2–52.0） ≈ 20.1 token/s | [B] 稠密基线 58.3 ms/token（57.9–59.7） ≈ 17.2 token/s | [汇总] 本方法/稠密 = 0.85×（>1 表示本方法更慢）
+t=1 run3 | [A] 本方法 48.6 ms/token（48.3–48.9） ≈ 20.6 token/s | [B] 稠密基线 58.5 ms/token（58.3–59.0） ≈ 17.1 token/s | [汇总] 本方法/稠密 = 0.83×（>1 表示本方法更慢）
+t=4 run1 | [A] 本方法 50.4 ms/token（50.3–50.4） ≈ 19.9 token/s | [B] 稠密基线 70.9 ms/token（70.8–71.0） ≈ 14.1 token/s | [汇总] 本方法/稠密 = 0.71×（>1 表示本方法更慢）
+t=4 run2 | [A] 本方法 49.1 ms/token（48.6–50.9） ≈ 20.4 token/s | [B] 稠密基线 70.2 ms/token（70.1–70.8） ≈ 14.2 token/s | [汇总] 本方法/稠密 = 0.70×（>1 表示本方法更慢）
+t=4 run3 | [A] 本方法 48.5 ms/token（48.5–48.6） ≈ 20.6 token/s | [B] 稠密基线 68.1 ms/token（68.0–68.2） ≈ 14.7 token/s | [汇总] 本方法/稠密 = 0.71×（>1 表示本方法更慢）
+跑后: temp=63.1'C throttled=throttled=0x0
+峰值RSS(最后一次): [汇总] 峰值 RSS 511 MB（resource.ru_maxrss，单位 KB）
+DONE

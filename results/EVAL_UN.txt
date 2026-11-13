@@ -1,0 +1,10 @@
+ckpt                  arch         step   BLEU-2     p1     p2  tok_acc
+ck_seed0.pt           mpchain    100000   0.3224  0.419  0.248   0.1870
+ck_seed1.pt           mpchain    100000   0.3150  0.416  0.238   0.1751
+ck_seed2.pt           mpchain    100000   0.3410  0.440  0.264   0.1957
+ck_ab_nomp.pt         mpchain    100000   0.0701  0.127  0.039   0.0361
+ck_ab_randroute.pt    mpchain    100000   0.3050  0.412  0.226   0.1554
+ck_ab_lastonly.pt     mpchain    100000   0.2798  0.378  0.207   0.1455
+ck_moe.pt             moe        100000   0.2659  0.369  0.192   0.1702
+
+逐句记录 -> /root/autodl-tmp/mpchain/evaldump/*.jsonl

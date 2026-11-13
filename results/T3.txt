@@ -1,0 +1,18 @@
+bench 全部结束 Fri Nov 13 01:39:28 CST 2026
+=== 启动 T=3, 15000 步 ===
+params=22.89M N=40 d=128 dmp=128 T=3 lam=1.0 margin=0.0 compile=1/default
+/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/compile_fx.py:282: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/lowering.py:7095: UserWarning: 
+Online softmax is disabled on the fly since Inductor decides to
+split the reduction. Cut an issue to PyTorch if this is an
+important use case and you want to speed it up with online
+softmax.
+
+  warnings.warn(
+ 2500 | loss 5.0290 acc 0.3750 full 0.3203 steps 2.03 | 242s
+  EVAL acc 0.2773 (full 0.2656, avg steps 2.07)
+ 5000 | loss 4.8702 acc 0.3906 full 0.3438 steps 2.23 | 404s
+  EVAL acc 0.3626 (full 0.3366, avg steps 2.30)
+ 7500 | loss 4.3415 acc 0.4453 full 0.4375 steps 2.39 | 564s
+  EVAL acc 0.3841 (full 0.3652, avg steps 2.36)

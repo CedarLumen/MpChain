@@ -1,0 +1,21 @@
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Data and checkpoints (large; see README)
+data/
+ckpt/
+*.pt
+*.nnpz
+
+# Evaluation dumps and per-run logs written by the scripts
+evaldump/
+reports/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

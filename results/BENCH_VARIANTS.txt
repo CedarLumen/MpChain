@@ -1,0 +1,43 @@
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition, 0 MiB
+===== A) 基线（eager，无 prefill）=====
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition  总显存 95.0 GB  opt=0
+模型             batch   首token ms   每token ms     吞吐 tok/s     权重MB     峰值MB
+MpChain            1       25.49       25.76         38.8       87      359
+MpChain            8       25.89       26.14        306.1       87      367
+MpChain           32       25.71       26.05       1228.8       87      393
+   (MpChain 总参 22.89M)
+   (CausalTF 总参 22.98M  d=384 L=12 ffn=1536)
+causal+KV          1        1.96        2.02        496.5       88      366
+causal+KV          8        1.95        2.05       3913.6       88      410
+causal+KV         32        2.89        2.18      14546.9       88      556
+causal noKV        1        1.86        1.97        509.0       88      369
+causal noKV        8        1.96        1.96       4091.0       88      436
+causal noKV       32        2.80        3.17      10146.0       88      660
+===== B) + prefill 缓存（英文只算一次）=====
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition  总显存 95.0 GB  opt=0
+模型             batch   首token ms   每token ms     吞吐 tok/s     权重MB     峰值MB
+MpChain+pre        1       16.30       16.25         61.5       87      359
+MpChain+pre        8       16.70       16.87        474.4       87      367
+MpChain+pre       32       16.66       16.99       1884.7       87      393
+   (MpChain 总参 22.89M)
+   (CausalTF 总参 22.98M  d=384 L=12 ffn=1536)
+causal+KV          1        1.96        2.00        501.3       88      366
+causal+KV          8        1.96        2.05       3901.8       88      410
+causal+KV         32        2.90        2.17      14605.5       88      556
+causal noKV        1        1.87        1.96        510.4       88      369
+causal noKV        8        1.97        1.95       4095.7       88      436
+causal noKV       32        2.76        3.17      10148.1       88      660
+===== C) compile(default)，两边同等对待 =====
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition  总显存 95.0 GB  opt=1 (compile default)
+模型             batch   首token ms   每token ms     吞吐 tok/s     权重MB     峰值MB
+/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/compile_fx.py:282: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/lowering.py:7095: UserWarning: 
+Online softmax is disabled on the fly since Inductor decides to
+split the reduction. Cut an issue to PyTorch if this is an
+important use case and you want to speed it up with online
+softmax.
+
+  warnings.warn(
+MpChain            1        7.39        7.27        137.6       87      487
+VARIANTS_DONE (C/D/E 已取消：compile 数据用本地那轮，云端只留 A/B)

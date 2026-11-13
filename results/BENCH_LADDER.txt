@@ -1,0 +1,159 @@
+已暂停 TF (pid 21860)
+6095 MiB, 95 %
+
+=== A 原样（无 prefill、无 compile） ===
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition  总显存 95.0 GB  opt=0
+模型             batch   首token ms   每token ms     吞吐 tok/s     权重MB     峰值MB
+MpChain            1       33.11       31.07         32.1       87      359
+MpChain            8       31.49       31.51        253.9       87      367
+MpChain           32       31.99       31.67       1010.0       87      393
+   (MpChain 总参 22.89M)
+   (CausalTF 总参 22.98M  d=384 L=12 ffn=1536)
+causal+KV          1        3.06        2.07        475.2       88      366
+causal+KV          8        3.76        2.05       3795.8       88      410
+causal+KV         32        7.38        2.16      13800.4       88      556
+causal noKV        1        3.06        2.19        451.3       88      369
+causal noKV        8        3.76        3.79       2113.1       88      436
+causal noKV       32        7.38        6.64       4800.9       88      660
+
+=== B +prefill 缓存源语言编码 ===
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition  总显存 95.0 GB  opt=0
+模型             batch   首token ms   每token ms     吞吐 tok/s     权重MB     峰值MB
+MpChain+pre        1       22.89       22.65         44.1       87      359
+MpChain+pre        8       23.23       22.86        349.8       87      367
+MpChain+pre       32       21.33       21.62       1480.7       87      393
+   (MpChain 总参 22.89M)
+   (CausalTF 总参 22.98M  d=384 L=12 ffn=1536)
+causal+KV          1        3.06        2.05        480.8       88      366
+causal+KV          8        3.77        2.05       3800.9       88      410
+causal+KV         32        7.37        2.11      14050.5       88      556
+causal noKV        1        3.06        2.23        443.6       88      369
+causal noKV        8        3.76        3.79       2113.2       88      436
+causal noKV       32        7.37        6.59       4838.1       88      660
+
+=== C +compile(default) ===
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition  总显存 95.0 GB  opt=1 (compile default)
+模型             batch   首token ms   每token ms     吞吐 tok/s     权重MB     峰值MB
+MpChain+pre        1       10.30       10.04         99.5       87      359
+MpChain+pre        8       10.24       10.12        790.1       87      367
+MpChain+pre       32       10.50       10.35       3091.5       87      392
+   (MpChain 总参 22.89M)
+   (CausalTF 总参 22.98M  d=384 L=12 ffn=1536)
+causal+KV          1        2.87        1.74        562.7       88      491
+causal+KV          8        3.58        1.74       4441.0       88      517
+causal+KV         32        7.49        1.77      16388.3       88      556
+causal noKV        1        2.85        1.50        650.3       88      491
+causal noKV        8        3.59        3.49       2292.7       88      435
+causal noKV       32        7.49        6.32       5036.9       88      649
+
+=== D +compile +reduce-overhead ===
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition  总显存 95.0 GB  opt=2 (compile reduce-overhead)
+模型             batch   首token ms   每token ms     吞吐 tok/s     权重MB     峰值MB
+Online softmax is disabled on the fly since Inductor decides to
+split the reduction. Cut an issue to PyTorch if this is an
+important use case and you want to speed it up with online
+softmax.
+
+MpChain+pre        1        7.67        5.88        168.5       87      359
+Online softmax is disabled on the fly since Inductor decides to
+split the reduction. Cut an issue to PyTorch if this is an
+important use case and you want to speed it up with online
+softmax.
+
+MpChain+pre        8        7.81        6.05       1309.5       87      494
+MpChain+pre       32        8.02        6.72       4731.4       87      487
+   (MpChain 总参 22.89M)
+   (CausalTF 总参 22.98M  d=384 L=12 ffn=1536)
+causal+KV          1        2.85        0.85       1099.1       88      480
+Traceback (most recent call last):
+  File "/root/autodl-tmp/mpchain/bench_infer2.py", line 298, in <module>
+    main()
+  File "/root/autodl-tmp/mpchain/bench_infer2.py", line 290, in main
+    f, per, tps, pk = bench_causal(tf, bs, reps, use_kv=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/mpchain/bench_infer2.py", line 236, in bench_causal
+    tot, _ = timed(decode_all, reps_d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/mpchain/bench_infer2.py", line 137, in timed
+    fn()
+  File "/root/autodl-tmp/mpchain/bench_infer2.py", line 223, in decode_all
+    lg2, cs = net(nxt, cs, causal=False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 375, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 736, in compile_wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/mpchain/bench_infer2.py", line 83, in forward
+    def forward(self, x, caches=None, causal=False):
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 929, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_functorch/aot_autograd.py", line 1241, in forward
+    return compiled_fn(full_args)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 384, in runtime_wrapper
+    all_outs = call_func_at_runtime_with_args(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_functorch/_aot_autograd/utils.py", line 126, in call_func_at_runtime_with_args
+    out = normalize_as_list(f(args))
+                            ^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 750, in inner_fn
+    outs = compiled_fn(args)
+           ^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 556, in wrapper
+    return compiled_fn(runtime_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/output_code.py", line 584, in __call__
+    return self.current_callable(inputs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/compile_fx.py", line 1655, in run
+    return compiled_fn(new_inputs)  # type: ignore[arg-type]
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/cudagraph_trees.py", line 403, in deferred_cudagraphify
+    fn, out = cudagraphify(model, inputs, new_static_input_idxs, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/cudagraph_trees.py", line 462, in cudagraphify
+    return manager.add_function(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/cudagraph_trees.py", line 2316, in add_function
+    return fn, fn(inputs)
+               ^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/cudagraph_trees.py", line 2012, in run
+    out = self._run(new_inputs, function_id)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/cudagraph_trees.py", line 2116, in _run
+    return self.run_eager(new_inputs, function_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/cudagraph_trees.py", line 2277, in run_eager
+    return node.run(new_inputs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/cudagraph_trees.py", line 670, in run
+    non_cudagraph_inps_storages = get_non_cudagraph_inps()
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/torch/_inductor/cudagraph_trees.py", line 666, in get_non_cudagraph_inps
+    and t.untyped_storage().data_ptr() not in existing_path_data_ptrs
+        ^^^^^^^^^^^^^^^^^^^
+RuntimeError: Error: accessing tensor output of CUDAGraphs that has been overwritten by a subsequent run. Stack trace: File "/root/autodl-tmp/mpchain/bench_infer2.py", line 87, in forward
+    h, c = blk(h, None if caches is None else caches[i], causal=causal)
+  File "/root/autodl-tmp/mpchain/bench_infer2.py", line 58, in forward
+    q, k, v = self.qkv(h).split(d, dim=-1). To prevent overwriting, clone the tensor outside of torch.compile() or call torch.compiler.cudagraph_mark_step_begin() before each model invocation.
+
+LADDER_DONE Fri Nov 13 18:20:53 CST 2026
+已恢复 TF

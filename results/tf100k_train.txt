@@ -1,0 +1,35 @@
+/root/miniconda3/lib/python3.12/site-packages/torch/nn/modules/transformer.py:392: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  warnings.warn(
+params=22.98M d=384 layers=12 slen=134
+resumed from step 50000
+52500 | loss 1.9944 | 1472s
+55000 | loss 1.4194 | 2848s
+  EVAL acc 0.6686
+57500 | loss 1.3145 | 4229s
+60000 | loss 1.5661 | 5352s
+  EVAL acc 0.6790
+62500 | loss 1.1764 | 5600s
+65000 | loss 1.7226 | 5816s
+  EVAL acc 0.6836
+67500 | loss 1.0739 | 6015s
+70000 | loss 1.1551 | 6206s
+  EVAL acc 0.6999
+72500 | loss 1.2446 | 6424s
+75000 | loss 1.2564 | 6615s
+  EVAL acc 0.6862
+77500 | loss 1.5686 | 6807s
+80000 | loss 1.1590 | 6998s
+  EVAL acc 0.7083
+82500 | loss 1.1209 | 7190s
+85000 | loss 1.3624 | 7380s
+  EVAL acc 0.7161
+87500 | loss 1.0842 | 7572s
+90000 | loss 1.5937 | 7763s
+  EVAL acc 0.7064
+92500 | loss 0.7706 | 7954s
+95000 | loss 1.2633 | 8145s
+  EVAL acc 0.7051
+97500 | loss 1.0773 | 8337s
+100000 | loss 1.2065 | 8527s
+  EVAL acc 0.7207
+FINAL eval acc 0.7207 in 8528s

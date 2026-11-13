@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the manuscript below."
+title: "Dissecting Serial Sparse Activation: On the Necessity of Chain Depth and What Memory and Routing Each Carry"
+abstract: >-
+  Code and measurement logs for a controlled deconstruction of serially chained,
+  hard-routed sparse activation: which part of the chain carries the sentence-level
+  metric, what routing contributes once the content correspondence is broken, and
+  how the ordering between sparse and dense architectures depends on the metric
+  and on the device.
+authors:
+  - family-names: Chen
+    given-names: Mengzhe
+    affiliation: "Beijing Institute of Technology, Beijing 100081, China"
+    email: cedargrove@foxmail.com
+type: software
+license: MIT
+repository-code: "https://github.com/<user>/<repo>"
+keywords:
+  - sparse activation
+  - mixture of experts
+  - hard routing
+  - external memory
+  - mechanism analysis
+  - character-level translation
