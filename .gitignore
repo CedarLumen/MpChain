@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# 训练产物（体积大，不入库）
+*.pt
+*.pth
+*.ckpt
+evaldump/
+*.jsonl
+
+# 日志
+*.log
+
+# 编辑器
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
